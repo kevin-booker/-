@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>首頁背景範例</title>
+  <style>
+    /* 讓 body 撐滿整個視窗，並放置背景圖 */
+    body {
+      margin: 0; /* 去掉預設空白 */
+      height: 100vh; /* 讓高度填滿視窗 */
+      background-image: url('你的首頁圖片.png'); /* 替換成你的圖片路徑 */
+      background-size: cover; /* 讓圖片鋪滿整個視窗 */
+      background-position: center; /* 置中圖片 */
+      background-repeat: no-repeat; /* 不重複 */
+    }
+  </style>
+</head>
+<body>
+  <!-- 以後可以在這裡放按鍵或其他互動元素 -->
+</body>
+</html>
