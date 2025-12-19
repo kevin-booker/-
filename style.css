@@ -1,1 +1,30 @@
+body {
+  font-family: sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
 
+/* 圖片大小置中 */
+.page-img {
+  max-width: 90%;
+  height: auto;
+  margin: 20px auto;
+  display: block;
+}
+
+/* 按鈕樣式 */
+button {
+  font-size: 20px;
+  padding: 10px 30px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 20px auto;
+}
+
+button:hover {
+  background-color: #43a047;
+}
