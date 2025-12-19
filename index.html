@@ -2,62 +2,17 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <title>首頁背景範例</title>
-  <style>
-    /* 讓 body 撐滿整個視窗，並放置背景圖 */
-    body {
-      margin: 0; /* 去掉預設空白 */
-      height: 100vh; /* 讓高度填滿視窗 */
-      background-image: url(farm.jpg); /* 替換成你的圖片路徑 */
-      background-size: cover; /* 讓圖片鋪滿整個視窗 */
-      background-position: center; /* 置中圖片 */
-      background-repeat: no-repeat; /* 不重複 */
-        /* 關鍵：讓內容可以置中 */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    /* 放按鈕的盒子 */
-    .menu {
-      background-color: rgba(0, 0, 0, 0.4); /* 半透明 */
-      padding: 40px 60px;
-      border-radius: 15px;
-      text-align: center;
-    }
-
-    .menu h1 {
-      color: white;
-      margin-bottom: 30px;
-    }
-
-    /* 開始遊戲按鈕 */
-    #startBtn {
-      font-size: 24px;
-      padding: 15px 40px;
-      border: none;
-      border-radius: 10px;
-      background-color: #4caf50;
-      color: white;
-      cursor: pointer;
-    }
-
-    #startBtn:hover {
-      background-color: #43a047;
-    }
-  </style>
+  <title>網頁農場遊戲</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <!-- 以後可以在這裡放按鍵或其他互動元素 -->
-  <div class="menu">
-    <h1>🌾 我的農場</h1>
-    <button id="startBtn">開始遊戲</button>
-  </div>
+<body class="home">
 
-  <script>
-    document.getElementById("startBtn").addEventListener("click", () => {
-      window.location.href = "game.html";
-    });
-  </script>
+  <!-- 首頁圖片 -->
+  <img src="img/home.png" alt="首頁圖" class="page-img">
 
+  <!-- 按鈕進入遊戲 -->
+  <button id="startBtn">開始遊戲</button>
+
+  <script src="script.js"></script>
 </body>
 </html>
