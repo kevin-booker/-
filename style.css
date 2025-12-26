@@ -1,5 +1,4 @@
-
-/* 首頁容器 */
+/* ---------- 首頁容器 ---------- */
 .home-container {
   position: relative;
   width: 100%;
@@ -7,22 +6,28 @@
   overflow: hidden;
 }
 
-/* 背景圖滿版 */
+/* 背景圖滿版 + 遊戲世界通用設定 */
 .page-img, .world {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;  
   display: block;
-  user-drag: none;      
+  user-drag: none;          /* 防止拖曳時圖片被抓走 */
   -webkit-user-drag: none;
   -webkit-user-select: none; 
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  cursor: grab;
+  cursor: grab;             /* 拖曳時滑鼠變手抓 */
+  position: absolute;       /* 讓每張圖可以自由定位 */
 }
 
-/* 開始遊戲按鈕 */
+/* map: 每張拼圖設定 */
+.map {
+  width: 1000px;            /* 每張圖原始大小，可依實際修改 */
+  height: 1000px;
+  top: 0;
+  left: 0;
+}
+
+/* ---------- 開始遊戲按鈕 ---------- */
 #startBtn {
   position: absolute;
   bottom: 15%;
@@ -37,7 +42,11 @@
   cursor: pointer;
 }
 
-/* 返回按鈕 */
+#startBtn:hover {
+  background-color: #43a047;
+}
+
+/* ---------- 返回按鈕 ---------- */
 #backBtn {
   position: absolute;
   top: 20px;
@@ -52,10 +61,22 @@
   cursor: pointer;
 }
 
-/* 遊戲容器 */
-.game-container {
+#backBtn:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* ---------- 遊戲容器 ---------- */
+.game-container, #viewport {
   position: relative;
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
+  overflow: hidden;        /* 限制拖曳時不出現白邊 */
+}
+
+/* ---------- 世界容器 ---------- */
+#world {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;   /* 拖曳與縮放中心固定左上角 */
 }
