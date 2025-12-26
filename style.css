@@ -1,49 +1,30 @@
+/* 取消瀏覽器預設空白 */
 body {
-  font-family: sans-serif;
-  text-align: center;
   margin: 0;
   padding: 0;
 }
 
-/* 圖片大小置中 */
-.page-img {
-  max-width: 90%;
-  height: auto;
-  margin: 20px auto;
-  display: block;
-}
-
-/* 按鈕樣式 */
-button {
-  font-size: 20px;
-  padding: 10px 30px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  margin: 20px auto;
-}
-
-button:hover {
-  background-color: #43a047;
-}
+/* 外層容器，撐滿整個畫面 */
 .home-container {
   position: relative;
-  width: 100%;
+  width: 100vw;     /* 視窗寬 */
+  height: 100vh;    /* 視窗高 */
+  overflow: hidden; /* 超出畫面直接裁掉 */
 }
 
-/* 讓圖片滿版 */
+/* 背景圖滿版 */
 .page-img {
   width: 100%;
-  height: auto;
-  display: block;
+  height: 100%;
+  object-fit: cover;  /* 重點：圖片等比例鋪滿 */
 }
 
-/* 把按鈕壓在圖片上 */
+/* 開始遊戲按鈕 */
 #startBtn {
   position: absolute;
-  bottom: 200px;      /* 離圖片底部的距離，可自己調 */
+
+  /* 👇 這裡就是你「調位置」的地方 */
+  bottom: 15%;        /* 離底部 15%（比 px 好調） */
   left: 50%;
   transform: translateX(-50%);
 
