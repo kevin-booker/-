@@ -28,3 +28,30 @@ button {
 button:hover {
   background-color: #43a047;
 }
+.home-container {
+  position: relative;
+  width: 100%;
+}
+
+/* 讓圖片滿版 */
+.page-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 把按鈕壓在圖片上 */
+#startBtn {
+  position: absolute;
+  bottom: 80px;      /* 離圖片底部的距離，可自己調 */
+  left: 50%;
+  transform: translateX(-50%);
+
+  font-size: 22px;
+  padding: 12px 36px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
