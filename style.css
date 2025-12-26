@@ -1,11 +1,5 @@
-/* 這三個是滿版的關鍵，少一個都不行 */
-html, body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-}
 
-/* 首頁容器：整個視窗 */
+/* 首頁容器 */
 .home-container {
   position: relative;
   width: 100%;
@@ -13,12 +7,19 @@ html, body {
   overflow: hidden;
 }
 
-/* 背景圖：真正滿版 */
-.page-img {
+/* 背景圖滿版 */
+.page-img, .world {
   width: 100%;
   height: 100%;
-  object-fit: cover;   /* 重點 */
+  object-fit: cover;  
   display: block;
+  user-drag: none;      
+  -webkit-user-drag: none;
+  -webkit-user-select: none; 
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: grab;
 }
 
 /* 開始遊戲按鈕 */
@@ -27,7 +28,6 @@ html, body {
   bottom: 15%;
   left: 50%;
   transform: translateX(-50%);
-
   font-size: 22px;
   padding: 12px 36px;
   background-color: #4caf50;
@@ -36,12 +36,13 @@ html, body {
   border-radius: 10px;
   cursor: pointer;
 }
+
+/* 返回按鈕 */
 #backBtn {
   position: absolute;
   top: 20px;
   right: 20px;
   z-index: 10;
-
   padding: 10px 20px;
   font-size: 16px;
   background-color: rgba(0,0,0,0.6);
@@ -50,25 +51,11 @@ html, body {
   border-radius: 8px;
   cursor: pointer;
 }
+
+/* 遊戲容器 */
 .game-container {
   position: relative;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
 }
-
-.world {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform-origin: center;
-  cursor: grab;
-  user-drag: none;       /* Safari / Chrome */
-  -webkit-user-drag: none;
-  -webkit-user-select: none; /* 禁止文字/圖片選取 */
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  cursor: grab;           /* 預設抓手 */
-}
-
