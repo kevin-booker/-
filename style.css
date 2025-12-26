@@ -43,7 +43,7 @@ button:hover {
 /* 把按鈕壓在圖片上 */
 #startBtn {
   position: absolute;
-  bottom: 80px;      /* 離圖片底部的距離，可自己調 */
+  bottom: 50px;      /* 離圖片底部的距離，可自己調 */
   left: 50%;
   transform: translateX(-50%);
 
