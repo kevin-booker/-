@@ -63,5 +63,12 @@ html, body {
   left: 0;
   transform-origin: center;
   cursor: grab;
+  user-drag: none;       /* Safari / Chrome */
+  -webkit-user-drag: none;
+  -webkit-user-select: none; /* 禁止文字/圖片選取 */
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: grab;           /* 預設抓手 */
 }
 
