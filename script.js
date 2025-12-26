@@ -1,6 +1,4 @@
-// ====================
-// 首頁：開始遊戲
-// ====================
+// 首頁按鈕
 const startBtn = document.getElementById("startBtn");
 if (startBtn) {
   startBtn.addEventListener("click", () => {
@@ -8,9 +6,7 @@ if (startBtn) {
   });
 }
 
-// ====================
-// 遊戲頁：返回首頁
-// ====================
+// 遊戲頁返回按鈕
 const backBtn = document.getElementById("backBtn");
 if (backBtn) {
   backBtn.addEventListener("click", () => {
@@ -18,12 +14,11 @@ if (backBtn) {
   });
 }
 
-// ====================
-// 遊戲頁：視角控制（只在 world 存在時）
-// ====================
+// 遊戲視角控制
 const world = document.querySelector(".world");
-world.addEventListener("dragstart", (e) => e.preventDefault());
 if (world) {
+  world.addEventListener("dragstart", e => e.preventDefault()); // 防止預設拖動
+
   let isDragging = false;
   let startX = 0;
   let startY = 0;
@@ -31,30 +26,26 @@ if (world) {
   let moveY = 0;
   let scale = 1;
 
-  // 滑鼠按下
-  world.addEventListener("mousedown", (e) => {
+  world.addEventListener("mousedown", e => {
     isDragging = true;
     startX = e.clientX - moveX;
     startY = e.clientY - moveY;
     world.style.cursor = "grabbing";
   });
 
-  // 滑鼠移動
-  window.addEventListener("mousemove", (e) => {
+  window.addEventListener("mousemove", e => {
     if (!isDragging) return;
     moveX = e.clientX - startX;
     moveY = e.clientY - startY;
     updateTransform();
   });
 
-  // 滑鼠放開
   window.addEventListener("mouseup", () => {
     isDragging = false;
     world.style.cursor = "grab";
   });
 
-  // 滾輪縮放
-  world.addEventListener("wheel", (e) => {
+  world.addEventListener("wheel", e => {
     e.preventDefault();
     const zoomSpeed = 0.001;
     scale -= e.deltaY * zoomSpeed;
@@ -63,7 +54,6 @@ if (world) {
   });
 
   function updateTransform() {
-    world.style.transform =
-      `translate(${moveX}px, ${moveY}px) scale(${scale})`;
+    world.style.transform = `translate(${moveX}px, ${moveY}px) scale(${scale})`;
   }
 }
