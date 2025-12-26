@@ -1,30 +1,30 @@
-/* 取消瀏覽器預設空白 */
-body {
+/* 這三個是滿版的關鍵，少一個都不行 */
+html, body {
+  width: 100%;
+  height: 100%;
   margin: 0;
-  padding: 0;
 }
 
-/* 外層容器，撐滿整個畫面 */
+/* 首頁容器：整個視窗 */
 .home-container {
   position: relative;
-  width: 100vw;     /* 視窗寬 */
-  height: 100vh;    /* 視窗高 */
-  overflow: hidden; /* 超出畫面直接裁掉 */
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
-/* 背景圖滿版 */
+/* 背景圖：真正滿版 */
 .page-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;  /* 重點：圖片等比例鋪滿 */
+  object-fit: cover;   /* 重點 */
+  display: block;
 }
 
 /* 開始遊戲按鈕 */
 #startBtn {
   position: absolute;
-
-  /* 👇 這裡就是你「調位置」的地方 */
-  bottom: 15%;        /* 離底部 15%（比 px 好調） */
+  bottom: 15%;
   left: 50%;
   transform: translateX(-50%);
 
