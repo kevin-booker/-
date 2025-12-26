@@ -22,7 +22,7 @@ if (backBtn) {
 // 遊戲頁：視角控制（只在 world 存在時）
 // ====================
 const world = document.querySelector(".world");
-
+world.addEventListener("dragstart", (e) => e.preventDefault());
 if (world) {
   let isDragging = false;
   let startX = 0;
