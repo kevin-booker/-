@@ -36,6 +36,20 @@ html, body {
   border-radius: 10px;
   cursor: pointer;
 }
+#backBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: rgba(0,0,0,0.6);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
 .game-container {
   position: relative;
   width: 100vw;
@@ -50,3 +64,4 @@ html, body {
   transform-origin: center;
   cursor: grab;
 }
+
