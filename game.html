@@ -6,19 +6,20 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="game">
+  <!-- 可視視窗 -->
   <div id="viewport">
+    <!-- 世界容器 -->
     <div id="world">
-      <div class="row">
-        <img src="left-up.jpg" class="map">
-        <img src="right-up.jpg" class="map">
-      </div>
-      <div class="row">
-        <img src="left-down.jpg" class="map">
-        <img src="right-down.jpg" class="map">
-      </div>
+      <img src="left-up.jpg" class="map">      <!-- 左上 -->
+      <img src="right-up.jpg" class="map">     <!-- 右上 -->
+      <img src="left-down.jpg" class="map">    <!-- 左下 -->
+      <img src="right-down.jpg" class="map">   <!-- 右下 -->
     </div>
+
+    <!-- 返回首頁按鈕 -->
     <button id="backBtn">返回首頁</button>
   </div>
-  <script src="game.js"></script>
+
+  <script src="script.js"></script>
 </body>
 </html>
