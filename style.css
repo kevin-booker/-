@@ -40,21 +40,30 @@
   overflow: hidden; /* 拖曳時不出現白邊 */
 }
 
-/* 世界容器，可拖曳縮放 */
+/* 世界容器 */
 #world {
   position: absolute;
   top: 0;
   left: 0;
-  transform-origin: 0 0; /* 拖曳和縮放以左上角為基準 */
+  transform-origin: 0 0;
   cursor: grab;
 }
 
-/* 拼圖 */
+/* 每一排 */
+.row {
+  display: flex;   /* 左右拼接 */
+}
+
+/* 地圖圖片：保持原始比例 */
 .map {
-  position: absolute;
-  width: 1000px; /* 每張圖尺寸，可自行調整 */
-  height: 1000px;
+  display: block;
   user-drag: none;
+  -webkit-user-drag: none;
+  user-select: none;
+
+  /* ❗關鍵：不設定 width / height */
+  max-width: none;
+  max-height: none;
 }
 
 /* 返回首頁按鈕 */
