@@ -99,12 +99,22 @@ if (world && viewport) {
       world.style.cursor = "grab";
     };
 
-    /* ---------- 縮放（不露白） ---------- */
-    window.addEventListener("wheel", e => {
-      e.preventDefault();
-      scale -= e.deltaY * 0.001;
-      scale = Math.max(minScale, Math.min(scale, 3));
-      update();
-    }, { passive: false });
+   window.addEventListener("wheel", e => {
+  e.preventDefault();
+
+  const rect = viewport.getBoundingClientRect();
+  const cx = rect.width / 2;
+  const cy = rect.height / 2;
+
+  const prevScale = scale;
+  scale -= e.deltaY * 0.001;
+  scale = Math.max(minScale, Math.min(scale, 3));
+
+  // 保持畫面中心不動
+  x = cx - (cx - x) * (scale / prevScale);
+  y = cy - (cy - y) * (scale / prevScale);
+
+  update();
+}, { passive: false });
   }
 }
