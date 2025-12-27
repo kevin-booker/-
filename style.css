@@ -1,27 +1,19 @@
-/* ====================
-   通用設定
-==================== */
-html, body {
-  margin: 0;
-  width: 100%;
-  height: 100%;
-}
-
-/* ====================
-   首頁
-==================== */
+/* ---------- 首頁 ---------- */
 .home-container {
   position: relative;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 
+/* 首頁圖片滿版 */
 .page-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; 
   display: block;
+  user-drag: none;
+  cursor: default;
 }
 
 /* 開始遊戲按鈕 */
@@ -30,56 +22,63 @@ html, body {
   bottom: 15%;
   left: 50%;
   transform: translateX(-50%);
-  padding: 14px 40px;
   font-size: 22px;
+  padding: 12px 36px;
+  background-color: #4caf50;
+  color: white;
   border: none;
   border-radius: 10px;
-  background: #4caf50;
-  color: white;
   cursor: pointer;
 }
+#startBtn:hover { background-color: #43a047; }
 
-/* ====================
-   遊戲頁
-==================== */
+
+/* ---------- 遊戲頁 ---------- */
 #viewport {
   position: relative;
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
-  background: #000;
+  overflow: hidden; /* 拖曳到邊界不會露出白邊 */
+  background-color: black; /* 背景顏色，避免縮放空白 */
 }
 
-/* 地圖世界 */
+/* 世界容器，可拖曳、縮放 */
 #world {
   position: absolute;
-  transform-origin: center center; /* ❗不要再用 0 0 */
+  top: 0;
+  left: 0;
+  transform-origin: 0 0; 
   cursor: grab;
 }
 
-
-/* 一排兩張 */
-.row {
-  display: flex;
-}
-
-/* 地圖圖片 */
+/* 拼圖圖片 */
 .map {
-  display: block;
-  user-select: none;
+  position: absolute;
+  width: 768px; /* 每張圖寬 */
+  height: 512px; /* 每張圖高 */
+  user-drag: none;
   -webkit-user-drag: none;
+  user-select: none;
 }
 
-/* 返回首頁 */
+/* 設置每張圖位置 */
+.map:nth-child(1) { top: 0; left: 0; }       /* 左上 */
+.map:nth-child(2) { top: 0; left: 768px; }   /* 右上 */
+.map:nth-child(3) { top: 512px; left: 0; }   /* 左下 */
+.map:nth-child(4) { top: 512px; left: 768px; } /* 右下 */
+
+/* 返回首頁按鈕 */
 #backBtn {
   position: absolute;
   top: 20px;
   right: 20px;
   z-index: 10;
   padding: 10px 20px;
+  font-size: 16px;
+  background-color: rgba(0,0,0,0.6);
+  color: white;
   border: none;
   border-radius: 8px;
-  background: rgba(0,0,0,0.7);
-  color: white;
   cursor: pointer;
 }
+#backBtn:hover { background-color: rgba(0,0,0,0.8); }
