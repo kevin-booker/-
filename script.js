@@ -1,16 +1,16 @@
 // ---------- 首頁按鈕 ----------
 const startBtn = document.getElementById("startBtn");
-if (startBtn) startBtn.addEventListener("click", () => window.location.href="game.html");
+if(startBtn) startBtn.addEventListener("click", () => window.location.href="game.html");
 
 // ---------- 返回首頁 ----------
 const backBtn = document.getElementById("backBtn");
-if (backBtn) backBtn.addEventListener("click", () => window.location.href="index.html");
+if(backBtn) backBtn.addEventListener("click", () => window.location.href="index.html");
 
 // ---------- 遊戲視角控制 ----------
 const world = document.getElementById("world");
 const viewport = document.getElementById("viewport");
 
-if (world && viewport) {
+if(world && viewport){
   world.addEventListener("dragstart", e => e.preventDefault());
 
   const imgWidth = 768;
@@ -23,20 +23,20 @@ if (world && viewport) {
   let scale = 1;
 
   const maxScale = 3;
-  const minScale = Math.max(viewport.offsetWidth / worldWidth, viewport.offsetHeight / worldHeight);
+  const minScale = Math.max(viewport.offsetWidth/worldWidth, viewport.offsetHeight/worldHeight);
 
   // 初始動畫參數
-  const initScale = 5;  // 初始超大放大
+  const initScale = 5;        // 一開始非常放大
   const finalScale = minScale; // 縮小到滿版
   scale = initScale;
   moveX = -(worldWidth*scale/2 - viewport.offsetWidth/2);
   moveY = -(worldHeight*scale/2 - viewport.offsetHeight/2);
 
-  function updateTransform() {
+  function updateTransform(){
     world.style.transform = `translate(${moveX}px, ${moveY}px) scale(${scale})`;
   }
 
-  function limitBounds() {
+  function limitBounds(){
     const scaledWidth = worldWidth*scale;
     const scaledHeight = worldHeight*scale;
     const minX = Math.min(0, viewport.offsetWidth - scaledWidth);
@@ -46,7 +46,7 @@ if (world && viewport) {
   }
 
   // ---------- 開場動畫 ----------
-  const animDuration = 2000; // 毫秒
+  const animDuration = 2000;
   let animStart = null;
   function animateOpen(timestamp){
     if(!animStart) animStart = timestamp;
@@ -101,4 +101,4 @@ if (world && viewport) {
 
   // 初始 transform
   updateTransform();
-}
+
