@@ -38,6 +38,7 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  background-color: #fff;
 }
 
 /* 世界容器 */
@@ -49,21 +50,20 @@
   cursor: grab;
 }
 
-/* 地圖圖片 */
+/* 四張地圖定位 */
 .map {
   position: absolute;
-  width: 768px;  /* 單張圖片寬 */
-  height: 512px; /* 單張圖片高 */
+  width: 768px;
+  height: 512px;
   user-drag: none;
   -webkit-user-drag: none;
   user-select: none;
 }
-/* 圖片位置 */
-#world img:nth-child(1) { top: 0; left: 0; }           /* 左上 */
-#world img:nth-child(2) { top: 0; left: 768px; }      /* 右上 */
-#world img:nth-child(3) { top: 512px; left: 0; }      /* 左下 */
-#world img:nth-child(4) { top: 512px; left: 768px; }  /* 右下 */
-這樣四張圖片就會拼成完整的農場。
+#world img:nth-child(1) { top: 0; left: 0; }          /* 左上 */
+#world img:nth-child(2) { top: 0; left: 768px; }       /* 右上 */
+#world img:nth-child(3) { top: 512px; left: 0; }       /* 左下 */
+#world img:nth-child(4) { top: 512px; left: 768px; }   /* 右下 */
+
 /* 返回首頁按鈕 */
 #backBtn {
   position: absolute;
