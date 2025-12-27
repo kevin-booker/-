@@ -53,22 +53,25 @@ if (world && viewport) {
     updateTransform();
   }, { passive: false });
 
-  // 更新 transform 並限制邊界
-  function updateTransform() {
-    const worldWidth = 2000 * scale;   // 四張圖寬度總和
-    const worldHeight = 2000 * scale;  // 四張圖高度總和
-    const vpWidth = viewport.offsetWidth;
-    const vpHeight = viewport.offsetHeight;
+ function updateTransform() {
+  // 先套用 transform（讓瀏覽器算實際尺寸）
+  world.style.transform = `translate(${moveX}px, ${moveY}px) scale(${scale})`;
 
-    // 計算邊界
-    const minX = vpWidth - worldWidth;
-    const minY = vpHeight - worldHeight;
-    moveX = Math.min(0, Math.max(moveX, minX));
-    moveY = Math.min(0, Math.max(moveY, minY));
+  // 取得 viewport 與 world 的實際顯示尺寸
+  const vpRect = viewport.getBoundingClientRect();
+  const worldRect = world.getBoundingClientRect();
 
-    // 套用 transform
-    world.style.transform = `translate(${moveX}px, ${moveY}px) scale(${scale})`;
-  }
+  // 計算邊界（world 比 viewport 大才限制）
+  const minX = vpRect.width - worldRect.width;
+  const minY = vpRect.height - worldRect.height;
+
+  // 限制拖曳範圍，避免露白
+  moveX = Math.min(0, Math.max(moveX, minX));
+  moveY = Math.min(0, Math.max(moveY, minY));
+
+  // 再套一次，確保修正後位置生效
+  world.style.transform = `translate(${moveX}px, ${moveY}px) scale(${scale})`;
+}
 
   // 初始視角
   updateTransform();
