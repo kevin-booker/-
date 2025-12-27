@@ -53,11 +53,10 @@ html, body {
 /* 地圖世界 */
 #world {
   position: absolute;
-  top: 0;
-  left: 0;
-  transform-origin: 0 0;
+  transform-origin: center center; /* ❗不要再用 0 0 */
   cursor: grab;
 }
+
 
 /* 一排兩張 */
 .row {
