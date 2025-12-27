@@ -27,7 +27,7 @@ if (world && viewport) {
   const maxScale = 3; // 可自行調整最大縮放
 
   // 初始位置：四張圖中心對齊 viewport 中心
-  let initScale = 2; // 開場動畫初始縮放
+  let initScale = 5; // 開場動畫初始縮放
   scale = initScale;
 
   moveX = -worldWidth/2*scale + viewport.offsetWidth/2;
