@@ -27,7 +27,7 @@ if (world && viewport) {
   const maxScale = 3; // 可自行調整最大縮放
 
   // 初始位置：四張圖中心對齊 viewport 中心
-  let initScale = 5; // 開場動畫初始縮放
+  let initScale = 2; // 開場動畫初始縮放
   scale = initScale;
 
   moveX = -worldWidth/2*scale + viewport.offsetWidth/2;
@@ -35,27 +35,43 @@ if (world && viewport) {
 
   updateTransform();
 
-  // 開場動畫：從 initScale 縮小到 minScale
-  const animDuration = 1500; // 毫秒
-  const animStart = performance.now();
-  function animateOpen(timestamp){
-    let t = (timestamp - animStart) / animDuration;
-    if(t>1) t=1;
+// ---------- 初始開場動畫 ----------
+const initScale = 5;   // 一開始非常放大
+const minScale = 1;    // 縮小到滿版時的比例
+scale = initScale;
 
-    scale = initScale - t*(initScale - minScale);
+// 四張圖拼起來的總尺寸
+const worldWidth = 2 * 768;   // 兩張寬度
+const worldHeight = 2 * 512;  // 兩張高度
 
-    // 保持中心不動
-    moveX = -worldWidth/2*scale + viewport.offsetWidth/2;
-    moveY = -worldHeight/2*scale + viewport.offsetHeight/2;
+// 動畫時間（毫秒）
+const animDuration = 2000;
 
-    limitBounds();
-    updateTransform();
+// 開始時間
+let animStart = null;
 
-    if(t<1){
-      requestAnimationFrame(animateOpen);
-    }
+function animateOpen(timestamp){
+  if(!animStart) animStart = timestamp;
+  let t = (timestamp - animStart) / animDuration;
+  if(t > 1) t = 1;
+
+  // scale 從 initScale 緩慢縮小到 minScale
+  scale = initScale - t * (initScale - minScale);
+
+  // 計算中心對齊的 moveX、moveY
+  moveX = -(worldWidth*scale/2 - viewport.offsetWidth/2);
+  moveY = -(worldHeight*scale/2 - viewport.offsetHeight/2);
+
+  // 套用 transform
+  world.style.transform = `translate(${moveX}px, ${moveY}px) scale(${scale})`;
+
+  if(t < 1){
+    requestAnimationFrame(animateOpen);
   }
-  requestAnimationFrame(animateOpen);
+}
+
+// 開場動畫
+requestAnimationFrame(animateOpen);
 
   // 拖曳事件
   world.addEventListener("mousedown", e => {
