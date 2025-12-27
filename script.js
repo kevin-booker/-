@@ -1,33 +1,34 @@
-const backBtn = document.getElementById("backBtn");
-if (backBtn) {
-  backBtn.addEventListener("click", () => window.location.href="index.html");
-}
+// ---------- 首頁按鈕 ----------
+const startBtn = document.getElementById("startBtn");
+if (startBtn) startBtn.addEventListener("click", () => window.location.href="game.html");
 
+// ---------- 返回首頁 ----------
+const backBtn = document.getElementById("backBtn");
+if (backBtn) backBtn.addEventListener("click", () => window.location.href="index.html");
+
+// ---------- 遊戲視角控制 ----------
 const world = document.getElementById("world");
 const viewport = document.getElementById("viewport");
 
 if (world && viewport) {
   world.addEventListener("dragstart", e => e.preventDefault());
 
-  const tileWidth = 768;
-  const tileHeight = 512;
-  const worldWidth = tileWidth * 2;
-  const worldHeight = tileHeight * 2;
+  const imgWidth = 768;
+  const imgHeight = 512;
+  const worldWidth = imgWidth*2;
+  const worldHeight = imgHeight*2;
 
-  let isDragging = false,
-      startX = 0,
-      startY = 0,
-      moveX = 0,
-      moveY = 0,
-      scale = 1;
+  let isDragging = false;
+  let startX=0, startY=0, moveX=0, moveY=0;
+  let scale = 1;
 
-  const minScale = Math.max(viewport.offsetWidth/worldWidth, viewport.offsetHeight/worldHeight);
-  const maxScale = 5; // 可調整最大放大比例
+  const maxScale = 3;
+  const minScale = Math.max(viewport.offsetWidth / worldWidth, viewport.offsetHeight / worldHeight);
 
-  // 初始開場動畫參數
-  const initScale = 5;   // 一開始非常放大
+  // 初始動畫參數
+  const initScale = 5;  // 初始超大放大
+  const finalScale = minScale; // 縮小到滿版
   scale = initScale;
-
   moveX = -(worldWidth*scale/2 - viewport.offsetWidth/2);
   moveY = -(worldHeight*scale/2 - viewport.offsetHeight/2);
 
@@ -45,59 +46,59 @@ if (world && viewport) {
   }
 
   // ---------- 開場動畫 ----------
-  const animDuration = 2000; // 動畫時間
-  const targetScale = minScale;
+  const animDuration = 2000; // 毫秒
   let animStart = null;
+  function animateOpen(timestamp){
+    if(!animStart) animStart = timestamp;
+    let t = (timestamp - animStart)/animDuration;
+    if(t>1) t=1;
 
-  function animateOpen(timestamp) {
-    if (!animStart) animStart = timestamp;
-    let t = (timestamp - animStart) / animDuration;
-    if (t > 1) t = 1;
-    // 緩慢縮放
-    scale = initScale - t*(initScale - targetScale);
+    scale = initScale - t*(initScale-finalScale);
     moveX = -(worldWidth*scale/2 - viewport.offsetWidth/2);
     moveY = -(worldHeight*scale/2 - viewport.offsetHeight/2);
     updateTransform();
-    if (t < 1) {
-      requestAnimationFrame(animateOpen);
-    }
-  }
 
+    if(t<1) requestAnimationFrame(animateOpen);
+  }
   requestAnimationFrame(animateOpen);
 
   // ---------- 拖曳 ----------
-  world.addEventListener("mousedown", e => {
-    isDragging = true;
+  world.addEventListener("mousedown", e=>{
+    isDragging=true;
     startX = e.clientX - moveX;
     startY = e.clientY - moveY;
-    world.style.cursor = "grabbing";
+    world.style.cursor="grabbing";
   });
-
-  window.addEventListener("mousemove", e => {
-    if (!isDragging) return;
+  window.addEventListener("mousemove", e=>{
+    if(!isDragging) return;
     moveX = e.clientX - startX;
     moveY = e.clientY - startY;
     limitBounds();
     updateTransform();
   });
-
-  window.addEventListener("mouseup", () => {
-    isDragging = false;
-    world.style.cursor = "grab";
+  window.addEventListener("mouseup", ()=>{
+    isDragging=false;
+    world.style.cursor="grab";
   });
 
   // ---------- 滾輪縮放 ----------
-  window.addEventListener("wheel", e => {
+  window.addEventListener("wheel", e=>{
     e.preventDefault();
-    const zoomSpeed = 0.002;
+    const zoomSpeed = 0.0015;
     let newScale = Math.min(Math.max(scale - e.deltaY*zoomSpeed, minScale), maxScale);
+
     const rect = world.getBoundingClientRect();
     const mx = e.clientX - rect.left;
     const my = e.clientY - rect.top;
-    moveX = moveX - mx*(newScale - scale);
-    moveY = moveY - my*(newScale - scale);
+
+    moveX = moveX - mx*(newScale-scale);
+    moveY = moveY - my*(newScale-scale);
+
     scale = newScale;
     limitBounds();
     updateTransform();
   }, {passive:false});
+
+  // 初始 transform
+  updateTransform();
 }
