@@ -1,71 +1,69 @@
-// ---------- 返回首頁 ----------
+// ---------- 首頁按鈕 ----------
+const startBtn = document.getElementById("startBtn");
+if(startBtn) startBtn.addEventListener("click", () => window.location.href="game.html");
+
+// ---------- 返回首頁按鈕 ----------
 const backBtn = document.getElementById("backBtn");
-if (backBtn) backBtn.addEventListener("click", () => window.location.href="index.html");
+if(backBtn) backBtn.addEventListener("click", () => window.location.href="index.html");
 
 // ---------- 遊戲視角控制 ----------
 const world = document.getElementById("world");
 const viewport = document.getElementById("viewport");
 
-if (world && viewport) {
-  // 防止圖片被誤拖走
+if(world && viewport){
   world.addEventListener("dragstart", e => e.preventDefault());
 
-  // 四張圖總尺寸
-  const worldWidth = 768*2;
-  const worldHeight = 512*2;
+  const mapW = 768;
+  const mapH = 512;
 
-  // 初始參數
-  let isDragging = false,
-      startX = 0,
-      startY = 0,
-      moveX = 0,
-      moveY = 0,
-      scale = 1;
+  const worldWidth = mapW*2;
+  const worldHeight = mapH*2;
 
-  // 最小縮放比例：保證滿版不露黑邊
-  const minScale = Math.max(viewport.offsetWidth / worldWidth, viewport.offsetHeight / worldHeight);
-  const maxScale = 3; // 可自行調整最大縮放
+  let isDragging = false;
+  let startX=0, startY=0, moveX=0, moveY=0;
+  let scale = 1;
 
-  // 初始位置：四張圖中心對齊 viewport 中心
-  let initScale = 2; // 開場動畫初始縮放
-  scale = initScale;
+  const minScale = Math.max(viewport.offsetWidth/worldWidth, viewport.offsetHeight/worldHeight);
+  const maxScale = 5;  // 最大縮放
+  const animInitScale = 5; // 開場動畫初始放大倍數
 
-  moveX = -worldWidth/2*scale + viewport.offsetWidth/2;
-  moveY = -worldHeight/2*scale + viewport.offsetHeight/2;
+  // 初始中心
+  moveX = -(worldWidth*animInitScale/2 - viewport.offsetWidth/2);
+  moveY = -(worldHeight*animInitScale/2 - viewport.offsetHeight/2);
+  scale = animInitScale;
 
   updateTransform();
 
-  // 開場動畫：從 initScale 縮小到 minScale
-  const animDuration = 1500; // 毫秒
-  const animStart = performance.now();
+  // ---------- 開場動畫 ----------
+  const animDuration = 2000; // 動畫時間2秒
+  let animStart = null;
+
   function animateOpen(timestamp){
-    let t = (timestamp - animStart) / animDuration;
+    if(!animStart) animStart = timestamp;
+    let t = (timestamp - animStart)/animDuration;
     if(t>1) t=1;
 
-    scale = initScale - t*(initScale - minScale);
+    // scale 從 animInitScale 緩慢縮小到 minScale
+    scale = animInitScale - t*(animInitScale - minScale);
 
-    // 保持中心不動
-    moveX = -worldWidth/2*scale + viewport.offsetWidth/2;
-    moveY = -worldHeight/2*scale + viewport.offsetHeight/2;
+    moveX = -(worldWidth*scale/2 - viewport.offsetWidth/2);
+    moveY = -(worldHeight*scale/2 - viewport.offsetHeight/2);
 
-    limitBounds();
     updateTransform();
 
-    if(t<1){
-      requestAnimationFrame(animateOpen);
-    }
+    if(t<1) requestAnimationFrame(animateOpen);
   }
   requestAnimationFrame(animateOpen);
 
-  // 拖曳事件
-  world.addEventListener("mousedown", e => {
+  // ---------- 拖曳 ----------
+  world.addEventListener("mousedown", e=>{
     isDragging = true;
     startX = e.clientX - moveX;
     startY = e.clientY - moveY;
     world.style.cursor = "grabbing";
   });
 
-  window.addEventListener("mousemove", e => {
+  window.addEventListener("mousemove", e=>{
     if(!isDragging) return;
     moveX = e.clientX - startX;
     moveY = e.clientY - startY;
@@ -73,18 +71,19 @@ if (world && viewport) {
     updateTransform();
   });
 
-  window.addEventListener("mouseup", () => {
+  window.addEventListener("mouseup", ()=>{
     isDragging = false;
     world.style.cursor = "grab";
   });
 
-  // 滾輪縮放
-  window.addEventListener("wheel", e => {
+  // ---------- 滾輪縮放 ----------
+  window.addEventListener("wheel", e=>{
     e.preventDefault();
     const zoomSpeed = 0.0015;
-    const newScale = Math.min(Math.max(scale - e.deltaY*zoomSpeed, minScale), maxScale);
+    let newScale = scale - e.deltaY*zoomSpeed;
+    newScale = Math.min(Math.max(newScale, minScale), maxScale);
 
-    // 計算鼠標為中心的縮放
+    // 滑鼠為中心縮放
     const rect = world.getBoundingClientRect();
     const mx = e.clientX - rect.left;
     const my = e.clientY - rect.top;
@@ -97,18 +96,18 @@ if (world && viewport) {
     updateTransform();
   }, {passive:false});
 
-  // 更新 transform
+  // ---------- 更新 transform ----------
   function updateTransform(){
     world.style.transform = `translate(${moveX}px, ${moveY}px) scale(${scale})`;
   }
 
-  // 限制邊界，不露黑邊
+  // ---------- 邊界限制 ----------
   function limitBounds(){
-    const scaledWidth = worldWidth*scale;
-    const scaledHeight = worldHeight*scale;
+    const scaledW = worldWidth*scale;
+    const scaledH = worldHeight*scale;
 
-    const minX = Math.min(0, viewport.offsetWidth - scaledWidth);
-    const minY = Math.min(0, viewport.offsetHeight - scaledHeight);
+    const minX = Math.min(0, viewport.offsetWidth - scaledW);
+    const minY = Math.min(0, viewport.offsetHeight - scaledH);
 
     moveX = Math.min(0, Math.max(moveX, minX));
     moveY = Math.min(0, Math.max(moveY, minY));
