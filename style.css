@@ -1,16 +1,22 @@
-/* ---------- 首頁 ---------- */
+/* ---------- 首頁容器 ---------- */
 .home-container {
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
+
+/* 首頁圖片滿版 */
 .page-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  user-drag: none;
+  cursor: default;
 }
+
+/* 開始遊戲按鈕 */
 #startBtn {
   position: absolute;
   bottom: 15%;
@@ -26,29 +32,34 @@
 }
 #startBtn:hover { background-color: #43a047; }
 
-/* ---------- 遊戲頁 ---------- */
+/* ---------- 遊戲頁容器 ---------- */
 #viewport {
   position: relative;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
 }
+
+/* 世界容器 */
 #world {
   position: absolute;
-  top:0;
-  left:0;
+  top: 0;
+  left: 0;
   transform-origin: 0 0;
   cursor: grab;
 }
-.row {
-  display: flex;
-}
+
+/* 地圖圖片 */
 .map {
-  display: block;
+  position: absolute;
+  width: 768px;  /* 單張圖片寬 */
+  height: 512px; /* 單張圖片高 */
   user-drag: none;
   -webkit-user-drag: none;
   user-select: none;
 }
+
+/* 返回首頁按鈕 */
 #backBtn {
   position: absolute;
   top: 20px;
