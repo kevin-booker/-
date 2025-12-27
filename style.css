@@ -1,19 +1,27 @@
-/* ---------- 首頁容器 ---------- */
-.home-container {
-  position: relative;
+/* ====================
+   通用設定
+==================== */
+html, body {
+  margin: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden; /* 防止按鈕或圖片溢出 */
 }
 
-/* 首頁圖片滿版 */
+/* ====================
+   首頁
+==================== */
+.home-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
 .page-img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* 滿版裁切，保留比例 */
+  object-fit: cover;
   display: block;
-  user-drag: none;
-  cursor: default;
 }
 
 /* 開始遊戲按鈕 */
@@ -22,25 +30,27 @@
   bottom: 15%;
   left: 50%;
   transform: translateX(-50%);
+  padding: 14px 40px;
   font-size: 22px;
-  padding: 12px 36px;
-  background-color: #4caf50;
-  color: white;
   border: none;
   border-radius: 10px;
+  background: #4caf50;
+  color: white;
   cursor: pointer;
 }
-#startBtn:hover { background-color: #43a047; }
 
-/* ---------- 遊戲頁容器 ---------- */
-#viewport, .game-container {
+/* ====================
+   遊戲頁
+==================== */
+#viewport {
   position: relative;
   width: 100vw;
   height: 100vh;
-  overflow: hidden; /* 拖曳時不出現白邊 */
+  overflow: hidden;
+  background: #000;
 }
 
-/* 世界容器 */
+/* 地圖世界 */
 #world {
   position: absolute;
   top: 0;
@@ -49,35 +59,28 @@
   cursor: grab;
 }
 
-/* 每一排 */
+/* 一排兩張 */
 .row {
-  display: flex;   /* 左右拼接 */
+  display: flex;
 }
 
-/* 地圖圖片：保持原始比例 */
+/* 地圖圖片 */
 .map {
   display: block;
-  user-drag: none;
-  -webkit-user-drag: none;
   user-select: none;
-
-  /* ❗關鍵：不設定 width / height */
-  max-width: none;
-  max-height: none;
+  -webkit-user-drag: none;
 }
 
-/* 返回首頁按鈕 */
+/* 返回首頁 */
 #backBtn {
   position: absolute;
   top: 20px;
   right: 20px;
   z-index: 10;
   padding: 10px 20px;
-  font-size: 16px;
-  background-color: rgba(0,0,0,0.6);
-  color: white;
   border: none;
   border-radius: 8px;
+  background: rgba(0,0,0,0.7);
+  color: white;
   cursor: pointer;
 }
-#backBtn:hover { background-color: rgba(0,0,0,0.8); }
