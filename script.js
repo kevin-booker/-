@@ -22,6 +22,7 @@ if(world && viewport){
   let startX=0, startY=0, moveX=0, moveY=0;
   let scale = 1;
 
+  
   const maxScale = 3;
   const minScale = Math.max(viewport.offsetWidth/worldWidth, viewport.offsetHeight/worldHeight);
 
