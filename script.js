@@ -115,4 +115,92 @@ if(world && viewport){
     console.log("世界座標：", Math.round(worldX), Math.round(worldY));
   });
 
+
+  const fields = [
+  {
+    name: "田地1",
+    polygon: [{x:449,y:627}, {x:404,y:588}, {x:248,y:692}, {x:293,y:731}],
+    cropImg: "flower.jpg",
+    hasCrop: false // 判斷這塊地是否已種植
+  }
+];
+
+viewport.addEventListener("click", e => {
+  const rect = viewport.getBoundingClientRect();
+  const clickX = (e.clientX - rect.left - moveX)/scale;
+  const clickY = (e.clientY - rect.top - moveY)/scale;
+
+  for (let field of fields) {
+    if(pointInPolygon({x:clickX, y:clickY}, field.polygon)) {
+      showPlantBox(field, e.clientX, e.clientY);
+      break; // 找到一塊地就停止
+    }
+  }
+});
+
+function pointInPolygon(point, vs) {
+  let x = point.x, y = point.y;
+  let inside = false;
+  for (let i = 0, j = vs.length - 1; i < vs.length; j = i++) {
+    let xi = vs[i].x, yi = vs[i].y;
+    let xj = vs[j].x, yj = vs[j].y;
+
+    let intersect = ((yi > y) != (yj > y))
+                 && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+    if(intersect) inside = !inside;
+  }
+  return inside;
+}
+
+function showPlantBox(field, clientX, clientY) {
+  // 先刪掉舊的方塊
+  const oldBox = document.getElementById("plantBox");
+  if(oldBox) oldBox.remove();
+
+  // 建立新的方塊
+  const box = document.createElement("div");
+  box.id = "plantBox";
+  box.style.position = "absolute";
+  box.style.left = clientX + "px";
+  box.style.top = clientY + "px";
+  box.style.padding = "10px";
+  box.style.background = "rgba(255,255,255,0.9)";
+  box.style.border = "2px solid green";
+  box.style.zIndex = 100;
+  box.style.transform = "translate(-50%, -100%)";
+
+  // 顯示農地名稱
+  const name = document.createElement("div");
+  name.textContent = field.name;
+  name.style.marginBottom = "5px";
+  box.appendChild(name);
+
+  // 建立種植按鈕
+  const btn = document.createElement("button");
+  btn.textContent = "種植";
+  btn.addEventListener("click", ()=>{
+    plantCrop(field);
+    box.remove();
+  });
+  box.appendChild(btn);
+
+  document.body.appendChild(box);
+}
+
+function plantCrop(field) {
+  if(field.hasCrop) return; // 已經種過不再種
+
+  const img = document.createElement("img");
+  img.src = field.cropImg;
+  img.style.position = "absolute";
+  img.style.left = "0px";
+  img.style.top = "0px";
+  img.style.width = worldWidth + "px";
+  img.style.height = worldHeight + "px";
+  img.style.pointerEvents = "none"; // 不阻擋滑鼠
+  world.appendChild(img);
+
+  field.hasCrop = true; // 標記已種植
+}
+
 }
