@@ -188,15 +188,32 @@ function showPlantBox(field, clientX, clientY) {
 }
 
 function plantCrop(field) {
-  if(field.hasCrop) return; // 已經種過不再種
+  if(field.hasCrop) return; // 已經種過就不再種
 
+  // -------- 計算農地邊界 --------
+  let minX = Math.min(...field.polygon.map(p => p.x));
+  let maxX = Math.max(...field.polygon.map(p => p.x));
+  let minY = Math.min(...field.polygon.map(p => p.y));
+  let maxY = Math.max(...field.polygon.map(p => p.y));
+
+  const bboxWidth = maxX - minX;
+  const bboxHeight = maxY - minY;
+  const centerX = minX + bboxWidth / 2;
+  const centerY = minY + bboxHeight / 2;
+
+  // -------- 建立作物圖片 --------
   const img = document.createElement("img");
   img.src = field.cropImg;
   img.style.position = "absolute";
-  img.style.left = "0px";
-  img.style.top = "0px";
-  img.style.width = worldWidth + "px";
-  img.style.height = worldHeight + "px";
+
+  // 對齊農地中心
+  img.style.left = `${centerX - bboxWidth/2}px`;
+  img.style.top  = `${centerY - bboxHeight/2}px`;
+
+  // 縮放到農地範圍大小
+  img.style.width  = `${bboxWidth}px`;
+  img.style.height = `${bboxHeight}px`;
+
   img.style.pointerEvents = "none"; // 不阻擋滑鼠
   world.appendChild(img);
 
