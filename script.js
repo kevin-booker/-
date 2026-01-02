@@ -102,4 +102,17 @@ if(world && viewport){
 
   // 初始 transform
   updateTransform();
+  //測試互動//
+    // ---------- 點擊讀取世界座標（測試用） ----------
+  world.addEventListener("click", e => {
+    // world 在畫面上的位置
+    const rect = world.getBoundingClientRect();
+
+    // 換算成「世界座標」
+    const worldX = (e.clientX - rect.left) / scale;
+    const worldY = (e.clientY - rect.top) / scale;
+
+    console.log("世界座標：", Math.round(worldX), Math.round(worldY));
+  });
+
 }
